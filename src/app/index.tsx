@@ -13,28 +13,17 @@ import "@patternfly/patternfly/utilities/Sizing/sizing.css";
 import "@patternfly/patternfly/utilities/Spacing/spacing.css";
 import "@patternfly/patternfly/utilities/Display/display.css";
 import "@patternfly/patternfly/utilities/Flex/flex.css";
-
-declare const __BASE_PATH__: string;
+import {Spinner} from "@patternfly/react-core";
 
 const App: React.FunctionComponent = () => {
  return (
-     <ConfigContext.Provider
-         value={
-             {
-                 srs: {
-                     apiBasePath: __BASE_PATH__,
-                 },
-             } as Config
-         }
-     >
-         <BasenameContext.Provider value={{ getBasename: () => "" }}>
-             <Router>
-                 <AppLayout>
-                     <AppRoutes />
-                 </AppLayout>
-             </Router>
-         </BasenameContext.Provider>
-     </ConfigContext.Provider>
+     <React.Suspense fallback={<Spinner />}>
+         <Router>
+             <AppLayout>
+                 <AppRoutes />
+             </AppLayout>
+         </Router>
+     </React.Suspense>
  );
 }
 

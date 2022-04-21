@@ -106,9 +106,10 @@ module.exports = (env, argv) => {
       new webpack.container.ModuleFederationPlugin({
         name: federatedModuleName,
         remotes: {
-          '@ads/ads': isProduction ?
-              `ads@/modules/registry/ads.js` :
-              `ads@//localhost:9009/ads.js`,
+          // '@ads/ads': isProduction ?
+          //     `ads@/modules/registry/ads.js` :
+          //     `ads@//localhost:9009/ads.js`,
+          '@ads/ads': `ads@//localhost:9009/ads.js`,
         },
         shared: {
           ...dependencies,

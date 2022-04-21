@@ -1,9 +1,11 @@
 import React, { ReactElement } from "react";
 import { Route, Switch } from "react-router-dom";
 
+// @ts-ignore
+const FederatedHomePage = React.lazy(() => import("@ads/ads/FederatedHomePage"));
 
 const HomePage: React.FunctionComponent = () => {
-    return (<h1>Home Page</h1>);
+    return (<FederatedHomePage />);
 };
 
 const RegistryArtifactsPage: React.FunctionComponent = () => {
