@@ -109,7 +109,30 @@ module.exports = (env, argv) => {
           // '@ads/ads': isProduction ?
           //     `ads@/modules/registry/ads.js` :
           //     `ads@//localhost:9009/ads.js`,
-          '@ads/ads': `ads@//localhost:9009/ads.js`,
+          '@ads/ads':
+              `promise new Promise(resolve => {
+                  const adsUrl = "http://localhost:9009/ads.js";
+                  if (window.ApiDesignerConfig && window.ApiDesignerConfig.federatedModules && window.ApiDesignerConfig.federatedModules.ads) {
+                      adsUrl = window.ApiDesignerConfig.federatedModules.ads;
+                  }
+                  
+                  const script = document.createElement('script')
+                  script.src = adsUrl
+                  script.onload = () => {
+                      const proxy = {
+                        get: (request) => window.ads.get(request),
+                        init: (arg) => {
+                          try {
+                            return window.ads.init(arg)
+                          } catch(e) {
+                            console.log('ADS remote container already initialized')
+                          }
+                        }
+                      }
+                      resolve(proxy)
+                    }
+                    document.head.appendChild(script);
+              })`
         },
         shared: {
           ...dependencies,
