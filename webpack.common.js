@@ -84,6 +84,7 @@ module.exports = (env, argv) => {
       new CopyPlugin({
         patterns: [
           {from: "./src/public/favicon.png", to: "images"},
+          {from: "./src/public/config.js", to: ""},
         ]
       }),
       new MiniCssExtractPlugin({
@@ -111,11 +112,14 @@ module.exports = (env, argv) => {
           //     `ads@//localhost:9009/ads.js`,
           '@ads/ads':
               `promise new Promise(resolve => {
-                  const adsUrl = "http://localhost:9009/ads.js";
-                  if (window.ApiDesignerConfig && window.ApiDesignerConfig.federatedModules && window.ApiDesignerConfig.federatedModules.ads) {
-                      adsUrl = window.ApiDesignerConfig.federatedModules.ads;
+                  const cfg = ApiDesignerConfig || window.ApiDesignerConfig;
+                  var adsUrl = "http://localhost:9009/ads.js";
+                  console.info("ApiDesignerConfig is", cfg);
+                  if (cfg && cfg.federatedModules && cfg.federatedModules.ads) {
+                      adsUrl = cfg.federatedModules.ads;
                   }
-                  
+                  console.info("Loading ads-ui from: " + adsUrl);
+
                   const script = document.createElement('script')
                   script.src = adsUrl
                   script.onload = () => {

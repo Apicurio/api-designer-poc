@@ -5,9 +5,8 @@ then
   ADS_UI_URL="http://localhost:9009/ads.js"
 fi
 
-
 echo "Generating config.js"
-echo "var ApiDesignerConfig = {
+echo "const ApiDesignerConfig = {
   \"federatedModules\": {
       \"ads\": \"$ADS_UI_URL\"
   }

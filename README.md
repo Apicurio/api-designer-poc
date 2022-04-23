@@ -41,3 +41,10 @@ Then open your browser to:
 
 http://localhost:8080/
 
+## Customizing the container
+When running the docker container you can customize it with the following environment
+variables:
+
+* `ADS_UI_URL` - The URL to the `ads-ui` federated modules.  Defaults to http://localhost:9009/ads.js
+
+
