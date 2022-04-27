@@ -15,6 +15,11 @@ then
   SRS_API_URL="http://localhost:8000"
 fi
 
+if [ "x$AUTH_ENABLED" = "x" ]
+then
+  AUTH_ENABLED="false"
+fi
+
 
 echo "Generating config.js"
 echo "const ApiDesignerConfig = {
@@ -24,7 +29,10 @@ echo "const ApiDesignerConfig = {
     },
   \"federatedModules\": {
       \"ads\": \"$ADS_UI_URL\"
-  }
+  },
+   \"auth\": {
+       \"enabled\": $AUTH_ENABLED
+   }
 }" > /usr/share/nginx/html/config.js
 
 echo "Generated config.js successfully."

@@ -83,8 +83,7 @@ module.exports = (env, argv) => {
       }),
       new CopyPlugin({
         patterns: [
-          {from: "./src/public/favicon.png", to: "images"},
-          {from: "./src/public/config.js", to: ""},
+          {from: "./src/public/favicon.png", to: "images"}
         ]
       }),
       new MiniCssExtractPlugin({

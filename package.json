@@ -4,7 +4,6 @@
   "description": "The Red Hat OpenShift API Designer UI (POC)",
   "main": "server.js",
   "federatedModuleName": "api-designer-poc",
-  "port": "8080",
   "repository": "https://github.com/apicurio/api-designer-poc.git",
   "homepage": "https://cloud.redhat.com/application-services/api-designer",
   "license": "Apache-2.0",

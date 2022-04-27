@@ -1,22 +1,31 @@
-import React, {useEffect, useState} from "react";
-import {
-    Page,
-    PageSidebar,
-    PageHeader, PageSection, PageSectionVariants, NavItem, NavGroup, Nav, NavExpandable, NavList
-} from "@patternfly/react-core";
+import React, {useContext, useState} from "react";
+import {Nav, NavExpandable, NavItem, NavList, Page, PageHeader, PageSidebar} from "@patternfly/react-core";
+import {KeycloakContext} from "@app/auth/keycloak/KeycloakContext";
+import {ApiDesignerConfigType, useApiDesignerContext} from "@app/contexts/config";
 
 export type AppLayoutProps = {
     children?: React.ReactNode;
 };
 
 export const AppLayout: React.FunctionComponent<AppLayoutProps> = ({ children }) => {
-
     const [isNavOpen, setNavOpen] = useState(true);
+    const keycloakContext = useContext(KeycloakContext);
+    const apiDesignerConfig: ApiDesignerConfigType | undefined = useApiDesignerContext();
+
+    // Force the user to login if auth is enabled.
+    if (apiDesignerConfig?.auth.enabled) {
+        if (!keycloakContext.keycloak) {
+            return (<div>403 Unauthorized</div>);
+        }
+        if (!keycloakContext.keycloak.authenticated) {
+            keycloakContext.keycloak?.login();
+            return <></>;
+        }
+    }
 
     const logoProps = {
-        href: 'https://patternfly.org',
-        onClick: () => console.log('clicked logo'),
-        target: '_blank'
+        href: "https://github.com/Apicurio/api-designer-poc",
+        target: "_blank"
     };
 
     const onNavToggle = () => {

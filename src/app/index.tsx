@@ -1,10 +1,15 @@
-import React, {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {BrowserRouter as Router} from "react-router-dom";
 import {Config, ConfigContext, BasenameContext} from "@rhoas/app-services-ui-shared";
 import {AppLayout} from "@app/app-layout";
 import {AppRoutes} from "@app/routes";
 import {Spinner} from "@patternfly/react-core";
-import {ApiDesignerConfigType} from "@app/config";
+import {ApiDesignerConfigContext, ApiDesignerConfigType} from "@app/contexts/config";
+import {getKeycloakInstance} from "./auth/keycloak/keycloakAuth";
+import {
+    KeycloakAuthProvider,
+    KeycloakContext,
+} from "@app/auth/keycloak/KeycloakContext";
 
 import "@app/app.css";
 
@@ -17,33 +22,57 @@ import "@patternfly/patternfly/utilities/Display/display.css";
 import "@patternfly/patternfly/utilities/Flex/flex.css";
 
 
-const App: React.FunctionComponent = () => {
+let keycloak: Keycloak.KeycloakInstance | undefined;
+// @ts-ignore
+const apiDesignerConfig: ApiDesignerConfigType = ApiDesignerConfig || window["ApiDesignerConfig"];
 
-    // @ts-ignore
-    const config: ApiDesignerConfigType = ApiDesignerConfig || window["ApiDesignerConfig"];
+
+const App: React.FunctionComponent = () => {
+    const [initialized, setInitialized] = useState(false);
+
+    // Initialize Keycloak
+    useEffect(() => {
+        if (apiDesignerConfig.auth.enabled) {
+            const init = async () => {
+                keycloak = await getKeycloakInstance();
+                setInitialized(true);
+            };
+            init();
+        } else {
+            setInitialized(true);
+        }
+    }, []);
+
+    if (!initialized) return <Spinner/>;
 
     return (
         <BasenameContext.Provider value={{getBasename: () => ""}}>
-            <ConfigContext.Provider
-                value={
-                    {
-                        srs: {
-                            apiBasePath: config.apis.srs,
-                        },
-                        ams: {
-                            apiBasePath: config.apis.ams,
-                        },
-                    } as Config
-                }
-            >
-                <Router>
-                    <React.Suspense fallback={<Spinner/>}>
-                        <AppLayout>
-                            <AppRoutes/>
-                        </AppLayout>
-                    </React.Suspense>
-                </Router>
-            </ConfigContext.Provider>
+            <ApiDesignerConfigContext.Provider value={apiDesignerConfig}>
+                <ConfigContext.Provider
+                    value={
+                        {
+                            srs: {
+                                apiBasePath: apiDesignerConfig.apis.srs,
+                            },
+                            ams: {
+                                apiBasePath: apiDesignerConfig.apis.ams,
+                            },
+                        } as Config
+                    }
+                >
+                    <KeycloakContext.Provider value={{keycloak, profile: keycloak?.profile}}>
+                        <KeycloakAuthProvider>
+                            <Router>
+                                <React.Suspense fallback={<Spinner/>}>
+                                    <AppLayout>
+                                        <AppRoutes/>
+                                    </AppLayout>
+                                </React.Suspense>
+                            </Router>
+                        </KeycloakAuthProvider>
+                    </KeycloakContext.Provider>
+                </ConfigContext.Provider>
+            </ApiDesignerConfigContext.Provider>
         </BasenameContext.Provider>
     );
 }
