@@ -17,7 +17,7 @@ Then open your browser (if it doesn't automatically open) to:
 http://localhost:8080/
 
 Note that for the UI to work, you will also need to be running the "ads-ui"
-UI, which provides a set of federate module components that this project uses.
+UI, which provides a set of federated module components that this project uses.
 The UI will fail to load if those are not available.  To run "ads-ui" go 
 here:
 
@@ -26,7 +26,7 @@ https://github.com/bf2fc6cc711aee1a0c2a/ads-ui
 The `ads-ui` UI should be available on port 9009 (which is the default port
 configured for that project).
 
-By default, this will start the application on localhost with authentication 
+By default, `api-designer-poc` will start on localhost with authentication 
 disabled.  This is called the "none" profile.  However, there are multiple
 profiles supported in dev/local mode:
 
