@@ -44,7 +44,7 @@ $ npm run start:dev
 
 The `staging` and `prod` profiles require you to modify your system's `hosts` file to add
 a mapping from `prod.foo.redhat.com` to your local machine's IP address.  These profiles
-will also enable SSL and authentication.
+will also enable SSL and authentication and **will be running on port** `1337`.
 
 # Build and run (docker)
 To run a production build using docker:
