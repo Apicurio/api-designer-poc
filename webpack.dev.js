@@ -49,6 +49,7 @@ module.exports = merge(common("development"), {
     compress: true,
     //inline: true,
     historyApiFallback: true,
+    allowedHosts: "all",
     hot: true,
     client: {
       overlay: true,
