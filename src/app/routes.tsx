@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { Route, Switch } from "react-router-dom";
+import {Route, Switch, useParams} from "react-router-dom";
 
 
 // @ts-ignore
@@ -11,15 +11,18 @@ const FederatedEditorPage = React.lazy(() => import("@ads/ads/FederatedEditorPag
 
 
 const HomePage: React.FunctionComponent = () => {
-    return (<FederatedHomePage />);
+    const params: any = useParams();
+    return (<FederatedHomePage params={params} />);
 };
 
 const RegistryPage: React.FunctionComponent = () => {
-    return (<FederatedRegistryPage />);
+    const params: any = useParams();
+    return (<FederatedRegistryPage params={params} />);
 };
 
 const EditorPage: React.FunctionComponent = () => {
-    return (<FederatedEditorPage />);
+    const params: any = useParams();
+    return (<FederatedEditorPage params={params} />);
 };
 
 

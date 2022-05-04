@@ -1,6 +1,6 @@
 const ApiDesignerConfig = {
     "apis": {
-        "srs": "http://localhost:8000",
+        "srs": "local-mock",
         "ams": "http://localhost:8001"
     },
     "federatedModules": {
