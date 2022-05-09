@@ -48,7 +48,7 @@ The `staging` and `prod` profiles require you to modify your system's `hosts` fi
 a mapping from `prod.foo.redhat.com` to your local machine's IP address.  These profiles
 will also enable SSL and authentication and **will be running on port** `1337`.
 
-# Build and run (docker)
+# Build and Run Docker Image
 To run a production build using docker:
 
 ```bash
@@ -56,12 +56,39 @@ $ npm install
 $ npm run prebuild
 $ npm run build
 $ docker build -t="apicurio/api-designer-poc" --rm .
-$ docker run -it -p 8080:80 apicurio/api-designer-poc
 ```
 
-Then open your browser to:
+## Run with authentication disabled
 
-http://localhost:8080/
+```bash
+$ docker run -it -p 8080:8080 apicurio/api-designer-poc
+```
+Then open your browser to http://localhost:8080/
+
+## Run with authentication enabled
+
+You will need to configure your hosts file. Type the following command in your terminal:
+
+```bash
+sudo vi /etc/hosts
+```
+
+Using a text editor of your choice, add the following to the hosts file:
+
+```bash
+127.0.0.1   prod.foo.redhat.com
+127.0.0.1   stage.foo.redhat.com
+127.0.0.1   qa.foo.redhat.com
+127.0.0.1   ci.foo.redhat.com
+```
+
+After configuring the hosts file, run the below docker command:
+
+```bash
+$ docker run -it -e AUTH_ENABLED=true -p 1337:1337 apicurio/api-designer-poc
+```
+Then open your browser to https://prod.foo.redhat.com:1337
+
 
 ## Customizing the container
 When running the docker container you can customize it with the following environment
