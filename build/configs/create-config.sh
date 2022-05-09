@@ -33,8 +33,8 @@ echo "const ApiDesignerConfig = {
    \"auth\": {
        \"enabled\": $AUTH_ENABLED
    }
-}" > /usr/share/nginx/html/config.js
+}" > /opt/app-root/src/config.js
 
 echo "Generated config.js successfully."
-cat /usr/share/nginx/html/config.js
+cat /opt/app-root/src/config.js
 

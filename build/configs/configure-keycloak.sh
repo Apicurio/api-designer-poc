@@ -28,10 +28,10 @@ then
     \"resource\": \"$KEYCLOAK_RESOURCE\",
     \"public-client\": true,
     \"confidential-port\": 0
-  }" > /usr/share/nginx/html/keycloak.json
+  }" > /opt/app-root/src/keycloak.json
 
   echo "Generated keycloak.json successfully."
-  cat /usr/share/nginx/html/keycloak.json
+  cat /opt/app-root/src/keycloak.json
 else
-  echo "Authentication disabled."
+  echo "Authentication disabled. Skipping Generation of keycloak.json"
 fi
