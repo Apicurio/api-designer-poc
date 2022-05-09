@@ -21,7 +21,9 @@ COPY --chown=1001:0 build/configs/nginx.conf /etc/nginx/nginx.conf
 # To avoid build failure in windows, convert text files from DOS line
 # endings (carriage return + line feed) to Unix line endings (line feed).
 RUN dos2unix /usr/local/bin/create-config.sh && \
-    dos2unix /usr/local/bin/configure-keycloak.sh
+    dos2unix /usr/local/bin/configure-keycloak.sh && \
+    dos2unix /usr/local/bin/entrypoint.sh && \
+    dos2unix /etc/nginx/nginx.conf
 
 # Copy dist files
 COPY --chown=1001:0 dist/ .
