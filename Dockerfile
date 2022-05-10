@@ -8,7 +8,7 @@ RUN yum install -y dos2unix
 # Configure certificate and key
 RUN mkdir -p /etc/pki/nginx/private && \
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/pki/nginx/private/server.key -out /etc/pki/nginx/server.crt --batch && \
-    chown -R 1001:0 /etc/pki/nginx/ && chmod 755 /etc/pki/nginx/private/server.key /etc/pki/nginx/server.crt
+    chown -R 1001:0 /etc/pki/nginx/ && chmod 755 /etc/pki/nginx/private/server.key /etc/pki/nginx/server.crt && chmod -R g+w /opt/app-root/src
 
 # Copy configuration scripts
 COPY --chown=1001:0 build/configs/create-config.sh /usr/local/bin/create-config.sh
