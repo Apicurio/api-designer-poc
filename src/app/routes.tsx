@@ -12,16 +12,19 @@ const FederatedEditorPage = React.lazy(() => import("@ads/ads/FederatedEditorPag
 
 const HomePage: React.FunctionComponent = () => {
     const params: any = useParams();
+    console.info("[HomePage] Params: ", params);
     return (<FederatedHomePage params={params} />);
 };
 
 const RegistryPage: React.FunctionComponent = () => {
     const params: any = useParams();
+    console.info("[RegistryPage] Params: ", params);
     return (<FederatedRegistryPage params={params} />);
 };
 
 const EditorPage: React.FunctionComponent = () => {
     const params: any = useParams();
+    console.info("[EditorPage] Params: ", params);
     return (<FederatedEditorPage params={params} />);
 };
 
@@ -32,7 +35,7 @@ export const AppRoutes = (): ReactElement => {
             <Route path='/' exact={true} component={HomePage}/>
             <Route path='/registries/:registryId' exact={true} component={RegistryPage}/>
             <Route path='/registries/:registryId/editor' exact={true} component={EditorPage}/>
-            <Route path='/editor' exact={true} component={EditorPage}/>
+            <Route path='/drafts/:draftId/editor' exact={true} component={EditorPage}/>
         </Switch>
     );
 };
