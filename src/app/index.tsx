@@ -45,21 +45,22 @@ const App: React.FunctionComponent = () => {
 
     if (!initialized) return <Spinner/>;
 
+    const cfg: Config = {
+        srs: {
+            apiBasePath: apiDesignerConfig.apis.srs,
+        },
+        ams: {
+            apiBasePath: apiDesignerConfig.apis.ams,
+        },
+        ads: {
+            editorsBasePath: apiDesignerConfig.federatedModules.editors
+        }
+    };
+
     return (
         <BasenameContext.Provider value={{getBasename: () => ""}}>
             <ApiDesignerConfigContext.Provider value={apiDesignerConfig}>
-                <ConfigContext.Provider
-                    value={
-                        {
-                            srs: {
-                                apiBasePath: apiDesignerConfig.apis.srs,
-                            },
-                            ams: {
-                                apiBasePath: apiDesignerConfig.apis.ams,
-                            },
-                        } as Config
-                    }
-                >
+                <ConfigContext.Provider value={cfg}>
                     <KeycloakContext.Provider value={{keycloak, profile: keycloak?.profile}}>
                         <KeycloakAuthProvider>
                             <Router>

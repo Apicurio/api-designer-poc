@@ -20,6 +20,11 @@ then
   AUTH_ENABLED="false"
 fi
 
+if [ "x$EDITORS_URL" = "x" ]
+then
+  EDITORS_URL="http://localhost:9011"
+fi
+
 
 echo "Generating config.js"
 echo "const ApiDesignerConfig = {
@@ -28,7 +33,8 @@ echo "const ApiDesignerConfig = {
         \"ams\": \"$AMS_API_URL\"
     },
   \"federatedModules\": {
-      \"ads\": \"$ADS_UI_URL\"
+      \"ads\": \"$ADS_UI_URL\",
+      \"editors\": \"$EDITORS_URL\"
   },
    \"auth\": {
        \"enabled\": $AUTH_ENABLED
