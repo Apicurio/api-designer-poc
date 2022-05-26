@@ -45,6 +45,7 @@ const App: React.FunctionComponent = () => {
 
     if (!initialized) return <Spinner/>;
 
+    // @ts-ignore
     const cfg: Config = {
         srs: {
             apiBasePath: apiDesignerConfig.apis.srs,

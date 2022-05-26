@@ -2,6 +2,7 @@ import { createContext, useContext } from "react";
 
 export type FederatedModulesType = {
     ads: string;
+    editors: string;
 }
 
 export type ApiUrlsType = {
