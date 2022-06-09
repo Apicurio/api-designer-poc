@@ -25,7 +25,7 @@ export const AppRoutes = (): ReactElement => {
     return (
         <Switch>
             <Route path='/' exact={true} component={HomePage}/>
-            <Route path='/drafts/:draftId/editor' exact={true} component={EditorPage}/>
+            <Route path='/designs/:designId/editor' exact={true} component={EditorPage}/>
         </Switch>
     );
 };
