@@ -6,6 +6,7 @@ import {AppRoutes} from "@app/routes";
 import {Spinner} from "@patternfly/react-core";
 import {ApiDesignerConfigContext, ApiDesignerConfigType} from "@app/contexts/config";
 import {getKeycloakInstance} from "./auth/keycloak/keycloakAuth";
+import {AlertProvider} from "@app/alerts";
 import {
     KeycloakAuthProvider,
     KeycloakContext,
@@ -60,21 +61,23 @@ const App: React.FunctionComponent = () => {
 
     return (
         <BasenameContext.Provider value={{getBasename: () => ""}}>
-            <ApiDesignerConfigContext.Provider value={apiDesignerConfig}>
-                <ConfigContext.Provider value={cfg}>
-                    <KeycloakContext.Provider value={{keycloak, profile: keycloak?.profile}}>
-                        <KeycloakAuthProvider>
-                            <Router>
-                                <React.Suspense fallback={<Spinner/>}>
-                                    <AppLayout>
-                                        <AppRoutes/>
-                                    </AppLayout>
-                                </React.Suspense>
-                            </Router>
-                        </KeycloakAuthProvider>
-                    </KeycloakContext.Provider>
-                </ConfigContext.Provider>
-            </ApiDesignerConfigContext.Provider>
+            <AlertProvider>
+                <ApiDesignerConfigContext.Provider value={apiDesignerConfig}>
+                    <ConfigContext.Provider value={cfg}>
+                        <KeycloakContext.Provider value={{keycloak, profile: keycloak?.profile}}>
+                            <KeycloakAuthProvider>
+                                <Router>
+                                    <React.Suspense fallback={<Spinner/>}>
+                                        <AppLayout>
+                                            <AppRoutes/>
+                                        </AppLayout>
+                                    </React.Suspense>
+                                </Router>
+                            </KeycloakAuthProvider>
+                        </KeycloakContext.Provider>
+                    </ConfigContext.Provider>
+                </ApiDesignerConfigContext.Provider>
+            </AlertProvider>
         </BasenameContext.Provider>
     );
 }
