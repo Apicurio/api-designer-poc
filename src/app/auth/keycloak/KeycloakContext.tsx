@@ -51,6 +51,9 @@ export const KeycloakAuthProvider: FunctionComponent<KeycloakAuthProviderProps> 
         srs: {
             getToken: getKeyCloakToken,
         },
+        apicurio_registry: {
+            getToken: getKeyCloakToken,
+        },
         getUsername,
         isOrgAdmin,
     } as Auth;
