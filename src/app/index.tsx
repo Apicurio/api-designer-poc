@@ -3,7 +3,7 @@ import {BrowserRouter as Router} from "react-router-dom";
 import {Config, ConfigContext, BasenameContext} from "@rhoas/app-services-ui-shared";
 import {AppLayout} from "@app/app-layout";
 import {AppRoutes} from "@app/routes";
-import {Spinner} from "@patternfly/react-core";
+import {EmptyState, EmptyStateIcon, Spinner, Title} from "@patternfly/react-core";
 import {ApiDesignerConfigContext, ApiDesignerConfigType} from "@app/contexts/config";
 import {getKeycloakInstance} from "./auth/keycloak/keycloakAuth";
 import {AlertProvider} from "@app/alerts";
@@ -59,6 +59,15 @@ const App: React.FunctionComponent = () => {
         }
     };
 
+    const loadingState: React.ReactNode = (
+        <EmptyState>
+            <EmptyStateIcon variant="container" component={Spinner} />
+            <Title size="lg" headingLevel="h4">
+                Loading
+            </Title>
+        </EmptyState>
+    );
+
     return (
         <BasenameContext.Provider value={{getBasename: () => ""}}>
             <AlertProvider>
@@ -67,7 +76,7 @@ const App: React.FunctionComponent = () => {
                         <KeycloakContext.Provider value={{keycloak, profile: keycloak?.profile}}>
                             <KeycloakAuthProvider>
                                 <Router>
-                                    <React.Suspense fallback={<Spinner/>}>
+                                    <React.Suspense fallback={loadingState}>
                                         <AppLayout>
                                             <AppRoutes/>
                                         </AppLayout>

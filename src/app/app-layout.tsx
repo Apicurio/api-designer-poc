@@ -1,5 +1,5 @@
-import React, {useContext, useState} from "react";
-import {Nav, NavExpandable, NavItem, NavList, Page, PageHeader, PageSidebar} from "@patternfly/react-core";
+import React, {useContext} from "react";
+import {Page, PageHeader, PageHeaderTools} from "@patternfly/react-core";
 import {KeycloakContext} from "@app/auth/keycloak/KeycloakContext";
 import {ApiDesignerConfigType, useApiDesignerContext} from "@app/contexts/config";
 
@@ -8,7 +8,6 @@ export type AppLayoutProps = {
 };
 
 export const AppLayout: React.FunctionComponent<AppLayoutProps> = ({ children }) => {
-    const [isNavOpen, setNavOpen] = useState(true);
     const keycloakContext = useContext(KeycloakContext);
     const apiDesignerConfig: ApiDesignerConfigType | undefined = useApiDesignerContext();
 
@@ -24,66 +23,33 @@ export const AppLayout: React.FunctionComponent<AppLayoutProps> = ({ children })
     }
 
     const logoProps = {
-        href: "https://github.com/Apicurio/api-designer-poc",
-        target: "_blank"
+        href: "/"
     };
 
-    const onNavToggle = () => {
-        setNavOpen(!isNavOpen);
+    const logout = (): void => {
+        keycloakContext.keycloak?.logout({redirectUri: window.location.href});
     };
 
-    const RightNav = (
-        <Nav>
-            <NavList>
-                <NavItem preventDefault to="#overview" itemId="overview" isActive={false}>
-                    Overview
-                </NavItem>
-                <NavItem preventDefault to="#apiman" itemId="apiman" isActive={false}>
-                    API Management
-                </NavItem>
-                <NavItem preventDefault to="#datasci" itemId="datasci" isActive={false}>
-                    Data Science
-                </NavItem>
-                <NavItem preventDefault to="#apidesigner" itemId="api-designer" isActive={true}>
-                    API Designer
-                </NavItem>
-                <NavExpandable title="Service Registry" groupId="service-registry" isActive={false}>
-                    <NavItem
-                        preventDefault
-                        to="#service-registry-1"
-                        groupId="service-registry"
-                        itemId="service-registry-1"
-                        isActive={false}
-                    >
-                        Service Registry Instances
-                    </NavItem>
-                    <NavItem
-                        preventDefault
-                        to="#service-registry-2"
-                        groupId="service-registry"
-                        itemId="service-registry-2"
-                        isActive={false}
-                    >
-                        Documentation
-                    </NavItem>
-                </NavExpandable>
-            </NavList>
-        </Nav>
-    );
+    const logo: React.ReactNode = <div className="app-logo">
+            <img className="pf-c-brand logo-make" src="/images/logo.png" alt="apicurio-logo" />
+            <span className="logo-model">API Designer</span>
+        </div>;
+
+    const headerActions: React.ReactNode = apiDesignerConfig?.auth.enabled ?
+        <PageHeaderTools style={{float: "right"}}>
+            <a onClick={logout}>Logout</a>
+        </PageHeaderTools>
+        : <React.Fragment />
 
     const Header = (
         <PageHeader
-            logo="API Designer (poc)"
+            logo={logo}
             logoProps={logoProps}
-            showNavToggle
-            isNavOpen={isNavOpen}
-            onNavToggle={onNavToggle}
+            headerTools={headerActions}
         />
     );
-    const Sidebar = <PageSidebar nav={RightNav} isNavOpen={isNavOpen} />;
-
     return (
-        <Page header={Header} sidebar={Sidebar}>
+        <Page header={Header}>
             {children}
         </Page>
     );
