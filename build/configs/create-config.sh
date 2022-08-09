@@ -20,19 +20,34 @@ then
   EDITORS_URL="http://localhost:9011"
 fi
 
+if [ "x$NAV_ENABLED" = "x" ]
+then
+  NAV_ENABLED="false"
+fi
+
+if [ "x$NAV_REGISTRY_URL" = "x" ]
+then
+  NAV_REGISTRY_URL=""
+fi
+
+
 
 echo "Generating config.js"
 echo "const ApiDesignerConfig = {
-    \"apis\": {
-        \"srs\": \"$SRS_API_URL\"
-    },
-  \"federatedModules\": {
-      \"ads\": \"$ADS_UI_URL\",
-      \"editors\": \"$EDITORS_URL\"
+  \"apis\": {
+    \"srs\": \"$SRS_API_URL\"
   },
-   \"auth\": {
-       \"enabled\": $AUTH_ENABLED
-   }
+  \"federatedModules\": {
+    \"ads\": \"$ADS_UI_URL\",
+    \"editors\": \"$EDITORS_URL\"
+  },
+  \"auth\": {
+    \"enabled\": $AUTH_ENABLED
+  },
+  \"apps\": {
+    \"showNav\": $NAV_ENABLED,
+    \"registry\": \"$NAV_REGISTRY_URL\"
+  }
 }" > /opt/app-root/src/config.js
 
 echo "Generated config.js successfully."

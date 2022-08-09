@@ -8,5 +8,9 @@ const ApiDesignerConfig = {
     },
     "auth": {
         "enabled": true
+    },
+    "apps": {
+        "showNav": true,
+        "registry": "https://apicurio-registry-mt-ui-mt-apicurio-apicurio-registry.apps.smaug.na.operate-first.cloud/"
     }
 }

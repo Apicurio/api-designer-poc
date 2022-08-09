@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import {Page, PageHeader, PageHeaderTools} from "@patternfly/react-core";
+import {Nav, NavItem, NavList, PageSidebar, Page, PageHeader, PageHeaderTools} from "@patternfly/react-core";
 import {KeycloakContext} from "@app/auth/keycloak/KeycloakContext";
 import {ApiDesignerConfigType, useApiDesignerContext} from "@app/contexts/config";
 
@@ -32,7 +32,7 @@ export const AppLayout: React.FunctionComponent<AppLayoutProps> = ({ children })
 
     const logo: React.ReactNode = <div className="app-logo">
             <img className="pf-c-brand logo-make" src="/images/logo.png" alt="apicurio-logo" />
-            <span className="logo-model">API Designer</span>
+            <span className="logo-model">Applications</span>
         </div>;
 
     const headerActions: React.ReactNode = apiDesignerConfig?.auth.enabled ?
@@ -41,15 +41,30 @@ export const AppLayout: React.FunctionComponent<AppLayoutProps> = ({ children })
         </PageHeaderTools>
         : <React.Fragment />
 
-    const Header = (
+    const header = (
         <PageHeader
             logo={logo}
             logoProps={logoProps}
             headerTools={headerActions}
         />
     );
+
+    const rightNav: React.ReactNode = (
+        <Nav>
+            <NavList>
+                <NavItem preventDefault to="#apidesigner" itemId="api-designer" isActive={true}>
+                    API Designer
+                </NavItem>
+                <NavItem to={apiDesignerConfig?.apps?.registry} itemId="registry" isActive={false}>
+                    Registry
+                </NavItem>
+            </NavList>
+        </Nav>
+    );
+    const sidebar: React.ReactNode | undefined = apiDesignerConfig?.apps?.showNav ? <PageSidebar nav={rightNav} isNavOpen={true} /> : undefined;
+
     return (
-        <Page header={Header}>
+        <Page header={header} sidebar={sidebar}>
             {children}
         </Page>
     );

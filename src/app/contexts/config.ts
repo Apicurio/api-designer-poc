@@ -1,5 +1,10 @@
 import { createContext, useContext } from "react";
 
+export type AppsType = {
+    showNav: boolean;
+    registry: string;
+}
+
 export type FederatedModulesType = {
     ads: string;
     editors: string;
@@ -17,6 +22,7 @@ export type ApiDesignerConfigType = {
     apis: ApiUrlsType;
     federatedModules: FederatedModulesType;
     auth: AuthType;
+    apps?: AppsType;
 }
 
 export const ApiDesignerConfigContext = createContext<ApiDesignerConfigType | undefined>(
