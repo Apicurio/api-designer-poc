@@ -15,3 +15,4 @@ then
 fi
 
 $DOCKER run -it -p 8080:8080 --env SRS_API_URL=local-mock apicurio/api-designer-poc
+
