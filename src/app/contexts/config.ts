@@ -6,7 +6,6 @@ export type FederatedModulesType = {
 }
 
 export type ApiUrlsType = {
-    ams: string;
     srs: string;
 }
 

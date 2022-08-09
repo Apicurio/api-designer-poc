@@ -5,19 +5,19 @@ then
 
   if [ "x$KEYCLOAK_REALM" = "x" ]
   then
-    KEYCLOAK_REALM="redhat-external"
+    KEYCLOAK_REALM="operate-first-apicurio"
   fi
   if [ "x$KEYCLOAK_URL" = "x" ]
   then
-    KEYCLOAK_URL="https://sso.redhat.com/auth/"
+    KEYCLOAK_URL="https://auth.apicur.io/auth/"
   fi
   if [ "x$KEYCLOAK_SSL_REQUIRED" = "x" ]
   then
-    KEYCLOAK_SSL_REQUIRED="all"
+    KEYCLOAK_SSL_REQUIRED="external"
   fi
   if [ "x$KEYCLOAK_RESOURCE" = "x" ]
   then
-    KEYCLOAK_RESOURCE="cloud-services"
+    KEYCLOAK_RESOURCE="ad-ui"
   fi
 
   echo "Generating keycloak.json"

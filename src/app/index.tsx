@@ -51,9 +51,6 @@ const App: React.FunctionComponent = () => {
         srs: {
             apiBasePath: apiDesignerConfig.apis.srs,
         },
-        ams: {
-            apiBasePath: apiDesignerConfig.apis.ams,
-        },
         ads: {
             editorsBasePath: apiDesignerConfig.federatedModules.editors
         }

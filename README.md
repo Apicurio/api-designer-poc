@@ -95,11 +95,10 @@ When running the docker container you can customize it with the following enviro
 variables:
 
 * `ADS_UI_URL` - The URL to the `ads-ui` federated modules.  Defaults to `http://localhost:9009/ads.js`
-* `AMS_API_URL` - The URL to the Account Management Service API.  Defaults to `http://localhost:8001`
 * `SRS_API_URL` - The URL to the Service Registry Fleet Manager API.  Defaults to `http://localhost:8000`
 * `EDITORS_URL` - The URL to the apicurio-studio-editors JS application.  Defaults to `http://localhost:9011`
 * `AUTH_ENABLED` - Whether to enable Keycloak authentication.  Defaults to `false`
-* `KEYCLOAK_REALM` - The Keycloak realm to use for authentication.  Defaults to `redhat-external`
-* `KEYCLOAK_URL` - The Keycloak auth URL to use for authentication.  Defaults to `https://sso.redhat.com/auth/`
-* `KEYCLOAK_SSL_REQUIRED` - The "SSL required" setting for Keycloak authentication.  Defaults to `all`
-* `KEYCLOAK_RESOURCE` - The Keycloak resource to use for authentication.  Defaults to `cloud-services`
+* `KEYCLOAK_REALM` - The Keycloak realm to use for authentication.  Defaults to `operate-first-apicurio`
+* `KEYCLOAK_URL` - The Keycloak auth URL to use for authentication.  Defaults to `https://auth.apicur.io/auth/`
+* `KEYCLOAK_SSL_REQUIRED` - The "SSL required" setting for Keycloak authentication.  Defaults to `external`
+* `KEYCLOAK_RESOURCE` - The Keycloak resource to use for authentication.  Defaults to `ad-ui`
