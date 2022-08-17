@@ -118,7 +118,7 @@ module.exports = (env, argv) => {
                   const fedModsUrl = adsUrl + "/fed-mods.json";
                   console.info("Loading ads-ui federated modules from: " + fedModsUrl);
                   fetch(fedModsUrl)
-                      .then((data) => {
+                      .then((response) => {
                           const data = response.json();
                           console.debug("Fed Mods: ", data);
                           const adsEntryPoint = data.ads.entry[0];
