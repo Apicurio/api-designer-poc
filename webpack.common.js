@@ -118,33 +118,35 @@ module.exports = (env, argv) => {
                   const fedModsUrl = adsUrl + "/fed-mods.json";
                   console.info("Loading ads-ui federated modules from: " + fedModsUrl);
                   fetch(fedModsUrl)
-                    .then((response) => response.json())
-                    .then((data) => {
-                      console.debug("Fed Mods: ", data);
-                      const adsEntryPoint = data.ads.entry[0];
-                      const script = document.createElement('script')
-                      const adsEntryPointUrl = adsUrl + adsEntryPoint;
-
-                      console.debug("ADS entry point URL: ", adsEntryPointUrl);
-                      
-                      script.src = adsEntryPointUrl;
-                      script.onload = () => {
-                          const proxy = {
-                            get: (request) => window.ads.get(request),
-                            init: (arg) => {
-                              try {
-                                return window.ads.init(arg)
-                              } catch(e) {
-                                console.log('ADS remote container already initialized')
+                      .then((data) => {
+                          const data = response.json();
+                          console.debug("Fed Mods: ", data);
+                          const adsEntryPoint = data.ads.entry[0];
+                          const script = document.createElement("script")
+                          const adsEntryPointUrl = adsUrl + adsEntryPoint;
+    
+                          console.debug("ADS entry point URL: ", adsEntryPointUrl);
+                          
+                          script.src = adsEntryPointUrl;
+                          script.onload = () => {
+                              const proxy = {
+                                  get: (request) => window.ads.get(request),
+                                  init: (arg) => {
+                                      try {
+                                          return window.ads.init(arg)
+                                      } catch(e) {
+                                          console.log("ADS remote container already initialized");
+                                      }
+                                  }
                               }
-                            }
+                              resolve(proxy)
                           }
-                          resolve(proxy)
-                        }
-                        document.head.appendChild(script);
-                      
-                      
-                    });
+                          document.head.appendChild(script);
+                      })
+                      .catch((error) => {
+                          console.debug("Failed to load fed-mods.json: ", JSON.stringify(error));
+                          console.error(error);
+                      });
               })`
         },
         shared: {
