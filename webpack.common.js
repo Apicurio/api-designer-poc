@@ -110,29 +110,41 @@ module.exports = (env, argv) => {
           '@ads/ads':
               `promise new Promise(resolve => {
                   const cfg = ApiDesignerConfig || window.ApiDesignerConfig;
-                  var adsUrl = "http://localhost:9009/ads.js";
+                  var adsUrl = "http://localhost:9009";
                   console.info("ApiDesignerConfig is", cfg);
                   if (cfg && cfg.federatedModules && cfg.federatedModules.ads) {
                       adsUrl = cfg.federatedModules.ads;
                   }
-                  console.info("Loading ads-ui from: " + adsUrl);
+                  const fedModsUrl = adsUrl + "/fed-mods.json";
+                  console.info("Loading ads-ui federated modules from: " + fedModsUrl);
+                  fetch(fedModsUrl)
+                    .then((response) => response.json())
+                    .then((data) => {
+                      console.debug("Fed Mods: ", data);
+                      const adsEntryPoint = data.ads.entry[0];
+                      const script = document.createElement('script')
+                      const adsEntryPointUrl = adsUrl + adsEntryPoint;
 
-                  const script = document.createElement('script')
-                  script.src = adsUrl
-                  script.onload = () => {
-                      const proxy = {
-                        get: (request) => window.ads.get(request),
-                        init: (arg) => {
-                          try {
-                            return window.ads.init(arg)
-                          } catch(e) {
-                            console.log('ADS remote container already initialized')
+                      console.debug("ADS entry point URL: ", adsEntryPointUrl);
+                      
+                      script.src = adsEntryPointUrl;
+                      script.onload = () => {
+                          const proxy = {
+                            get: (request) => window.ads.get(request),
+                            init: (arg) => {
+                              try {
+                                return window.ads.init(arg)
+                              } catch(e) {
+                                console.log('ADS remote container already initialized')
+                              }
+                            }
                           }
+                          resolve(proxy)
                         }
-                      }
-                      resolve(proxy)
-                    }
-                    document.head.appendChild(script);
+                        document.head.appendChild(script);
+                      
+                      
+                    });
               })`
         },
         shared: {

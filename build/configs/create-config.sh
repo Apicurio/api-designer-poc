@@ -2,7 +2,7 @@
 
 if [ "x$ADS_UI_URL" = "x" ]
 then
-  ADS_UI_URL="http://localhost:9009/ads.js"
+  ADS_UI_URL="http://localhost:9009"
 fi
 
 if [ "x$SRS_API_URL" = "x" ]
