@@ -1,16 +1,13 @@
-import React, {useState, useEffect} from "react";
-import {BrowserRouter as Router} from "react-router-dom";
-import {Config, ConfigContext, BasenameContext} from "@rhoas/app-services-ui-shared";
-import {AppLayout} from "@app/app-layout";
-import {AppRoutes} from "@app/routes";
-import {EmptyState, EmptyStateIcon, Spinner, Title} from "@patternfly/react-core";
-import {ApiDesignerConfigContext, ApiDesignerConfigType} from "@app/contexts/config";
-import {getKeycloakInstance} from "./auth/keycloak/keycloakAuth";
-import {AlertProvider} from "@app/alerts";
-import {
-    KeycloakAuthProvider,
-    KeycloakContext,
-} from "@app/auth/keycloak/KeycloakContext";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { BasenameContext, Config, ConfigContext } from "@rhoas/app-services-ui-shared";
+import { AppLayout } from "@app/app-layout";
+import { AppRoutes } from "@app/routes";
+import { EmptyState, EmptyStateIcon, Spinner, Title } from "@patternfly/react-core";
+import { ApiDesignerConfigContext, ApiDesignerConfigType } from "@app/contexts/config";
+import { getKeycloakInstance } from "./auth/keycloak/keycloakAuth";
+import { AlertProvider } from "@app/alerts";
+import { KeycloakAuthProvider, KeycloakContext, } from "@app/auth/keycloak/KeycloakContext";
 
 import "@app/app.css";
 
@@ -24,6 +21,7 @@ import "@patternfly/patternfly/utilities/Flex/flex.css";
 
 
 let keycloak: Keycloak.KeycloakInstance | undefined;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const apiDesignerConfig: ApiDesignerConfigType = ApiDesignerConfig || window["ApiDesignerConfig"];
 
@@ -46,6 +44,7 @@ const App: React.FunctionComponent = () => {
 
     if (!initialized) return <Spinner/>;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const cfg: Config = {
         srs: {
@@ -66,11 +65,11 @@ const App: React.FunctionComponent = () => {
     );
 
     return (
-        <BasenameContext.Provider value={{getBasename: () => ""}}>
+        <BasenameContext.Provider value={{ getBasename: () => "" }}>
             <AlertProvider>
                 <ApiDesignerConfigContext.Provider value={apiDesignerConfig}>
                     <ConfigContext.Provider value={cfg}>
-                        <KeycloakContext.Provider value={{keycloak, profile: keycloak?.profile}}>
+                        <KeycloakContext.Provider value={{ keycloak, profile: keycloak?.profile }}>
                             <KeycloakAuthProvider>
                                 <Router>
                                     <React.Suspense fallback={loadingState}>
@@ -86,6 +85,6 @@ const App: React.FunctionComponent = () => {
             </AlertProvider>
         </BasenameContext.Provider>
     );
-}
+};
 
 export default App;

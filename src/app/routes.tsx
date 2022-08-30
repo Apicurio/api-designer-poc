@@ -1,9 +1,11 @@
 import React, { ReactElement } from "react";
-import {Route, Switch, useParams} from "react-router-dom";
+import { Route, Switch, useParams } from "react-router-dom";
 
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const FederatedHomePage = React.lazy(() => import("@ads/ads/FederatedHomePage"));
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const FederatedEditorPage = React.lazy(() => import("@ads/ads/FederatedEditorPage"));
 
