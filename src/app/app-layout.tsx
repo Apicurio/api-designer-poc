@@ -1,7 +1,7 @@
-import React, {useContext} from "react";
-import {Nav, NavItem, NavList, PageSidebar, Page, PageHeader, PageHeaderTools} from "@patternfly/react-core";
-import {KeycloakContext} from "@app/auth/keycloak/KeycloakContext";
-import {ApiDesignerConfigType, useApiDesignerContext} from "@app/contexts/config";
+import React, { useContext } from "react";
+import { Nav, NavItem, NavList, Page, PageHeader, PageHeaderTools, PageSidebar } from "@patternfly/react-core";
+import { KeycloakContext } from "@app/auth/keycloak/KeycloakContext";
+import { ApiDesignerConfigType, useApiDesignerContext } from "@app/contexts/config";
 
 export type AppLayoutProps = {
     children?: React.ReactNode;
@@ -27,19 +27,22 @@ export const AppLayout: React.FunctionComponent<AppLayoutProps> = ({ children })
     };
 
     const logout = (): void => {
-        keycloakContext.keycloak?.logout({redirectUri: window.location.href});
+        keycloakContext.keycloak?.logout({ redirectUri: window.location.href });
     };
 
-    const logo: React.ReactNode = <div className="app-logo">
+    const logo: React.ReactNode = (
+        <div className="app-logo">
             <img className="pf-c-brand logo-make" src="/images/logo.png" alt="apicurio-logo" />
             <span className="logo-model">Applications</span>
-        </div>;
+        </div>
+    );
 
     const headerActions: React.ReactNode = apiDesignerConfig?.auth.enabled ?
-        <PageHeaderTools style={{float: "right"}}>
+        <PageHeaderTools style={{ float: "right" }}>
             <a onClick={logout}>Logout</a>
         </PageHeaderTools>
         : <React.Fragment />
+    ;
 
     const header = (
         <PageHeader
@@ -68,5 +71,5 @@ export const AppLayout: React.FunctionComponent<AppLayoutProps> = ({ children })
             {children}
         </Page>
     );
-}
+};
 
